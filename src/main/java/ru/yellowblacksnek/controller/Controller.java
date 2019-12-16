@@ -29,10 +29,9 @@ public class Controller {
     @CrossOrigin
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User req) {
-        if(req.getPassword() == null)
+        if(req.getPassword() == null || req.getPassword().length() < 4)
             return new ResponseEntity<>("Wrong syntax.", HttpStatus.BAD_REQUEST);
         User user = userService.findByUsername(req.getUsername());
-        System.out.println(req.getUsername() + " " + req.getPassword());
         if(user == null) {
             userService.save(req);
             System.out.println("user registered: " + req.getUsername());
@@ -79,6 +78,8 @@ public class Controller {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ExceptionHandler({HttpMessageNotReadableException.class, IdentifierGenerationException.class, TransactionSystemException.class})
     public String handleParsingException(Exception e) {
+        System.out.println("Exception occurred:");
+        System.out.println(e.getMessage());
         return "Wrong syntax.";
     }
 }
