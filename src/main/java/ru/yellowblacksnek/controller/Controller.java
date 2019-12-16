@@ -29,7 +29,10 @@ public class Controller {
     @CrossOrigin
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User req) {
-        if(req.getPassword() == null || req.getPassword().length() < 4)
+        if(req.getPassword() == null ||
+            req.getPassword().length() < 4 ||
+            req.getUsername() == null ||
+            req.getUsername().length() < 4)
             return new ResponseEntity<>("Wrong syntax.", HttpStatus.BAD_REQUEST);
         User user = userService.findByUsername(req.getUsername());
         if(user == null) {
