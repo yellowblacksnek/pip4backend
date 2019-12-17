@@ -29,6 +29,7 @@ public class Controller {
     @CrossOrigin
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User req) {
+        System.out.println("register request");
         if(req.getPassword() == null ||
             req.getPassword().length() < 4 ||
             req.getUsername() == null ||
@@ -48,12 +49,14 @@ public class Controller {
     @CrossOrigin
     @GetMapping("/login")
     public ResponseEntity<?> login(Principal principal) {
+        System.out.println("login request");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @CrossOrigin
     @GetMapping("/history")
     public Collection<Point> getPoints(Principal user) {
+        System.out.println("history request");
         Collection<Point> points = pointService.getPoints(user);
         points.parallelStream().forEach(p -> p.setUser(null));
         return points;
@@ -62,6 +65,7 @@ public class Controller {
     @CrossOrigin
     @PostMapping("/point")
     public ResponseEntity<?> addPoint(@RequestBody Point point, Principal principal) {
+        System.out.println("point request");
         User user = userService.findByUsername(principal.getName());
         point.setUser(user);
         if(!point.validate())
