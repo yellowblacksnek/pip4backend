@@ -10,8 +10,8 @@ import java.util.Objects;
 @Table(name="users")
 public class User {
 
-    private @Id @NotEmpty @Column(columnDefinition="TEXT") String username;
-    private @NotNull @NotEmpty @Column(columnDefinition="TEXT") String password;
+    private @Id @NotEmpty @Column(columnDefinition="varchar(255)") String username;
+    private @NotNull @NotEmpty @Column(columnDefinition="varchar(255)") String password;
 
     public User() {}
 
