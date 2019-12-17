@@ -72,12 +72,6 @@ public class Controller {
         return new ResponseEntity<>(pointService.save(point).setUser(null), HttpStatus.CREATED);
     }
 
-    @CrossOrigin
-    @GetMapping("/area")
-    public Area getArea() {
-        return new Area();
-    }
-
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ExceptionHandler({HttpMessageNotReadableException.class, IdentifierGenerationException.class, TransactionSystemException.class})
     public String handleParsingException(Exception e) {
