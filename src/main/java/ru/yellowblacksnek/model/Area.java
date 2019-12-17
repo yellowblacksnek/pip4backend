@@ -18,9 +18,9 @@ public class Area {
         double x = point.getX();
         double y = point.getY();
         double r = point.getR();
-        return (x <= 0 && y <= 0 && (x/r) >= -r && (y/r) >= -r/2) ||
-                (x >= 0 && y >= 0 && y <= (r-2*x)) ||
-                (x >= 0 && y <=0 && Math.sqrt(x*x + y*y) <= r/2);
+        return (x <= 0 && y >= 0 && x >= -r/2 && y <= r) || //rect
+                (x >= 0 && y >= 0 && y <= (-x+r/2)) || //triangle
+                (x <= 0 && y <=0 && Math.sqrt(x*x + y*y) <= r/2); //arc
     }
 
     public static class Rect {

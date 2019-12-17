@@ -78,7 +78,7 @@ public class Point {
 
     public boolean validate() {
         if(x == null || y == null || r == null) return false;
-        double[] correctRs = {-2.0, -1.5, -1.0, -0.5, 0, 0.5, 1.0, 1.5, 2.0};
+        double[] correctRs = {0.05, 1.0, 2.0, 3.0, 4.0, 5.0};
         boolean rCorrect = false;
         for(double r : correctRs) {
             if(this.r.compareTo(r) == 0) {
