@@ -26,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) {
         System.out.println("looking for user with username: " + username);
-        User user = userService.findByUsername(username);
+        User user = userService.find(username);
         if (user == null) throw new UsernameNotFoundException(username);
         System.out.println("user " + username + " found");
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();

@@ -8,4 +8,5 @@ import java.util.Collection;
 public interface PointService {
     Point save(Point point);
     Collection<Point> getPoints(Principal user);
+    boolean validate(Point point);
 }

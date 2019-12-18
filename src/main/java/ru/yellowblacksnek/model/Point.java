@@ -76,19 +76,6 @@ public class Point {
         return this;
     }
 
-    public boolean validate() {
-        if(x == null || y == null || r == null) return false;
-        double[] correctRs = {0.05, 1.0, 2.0, 3.0, 4.0, 5.0};
-        boolean rCorrect = false;
-        for(double r : correctRs) {
-            if(this.r.compareTo(r) == 0) {
-                rCorrect = true;
-                break;
-            }
-        }
-        return rCorrect;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

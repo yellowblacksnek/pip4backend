@@ -29,15 +29,9 @@ public class Controller {
     @CrossOrigin
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User req) {
-        System.out.println("register request");
-        if(req.getPassword() == null ||
-            req.getPassword().length() < 4 ||
-            req.getUsername() == null ||
-            req.getUsername().length() < 4)
+        if(!userService.validate(req))
             return new ResponseEntity<>("Wrong syntax.", HttpStatus.BAD_REQUEST);
-        User user = userService.findByUsername(req.getUsername());
-        if(user == null) {
-            userService.save(req);
+        if(userService.saveIfNotExists(req)) {
             System.out.println("user registered: " + req.getUsername());
             return new ResponseEntity<>("User registered.", HttpStatus.CREATED);
         } else {
@@ -49,14 +43,12 @@ public class Controller {
     @CrossOrigin
     @GetMapping("/login")
     public ResponseEntity<?> login(Principal principal) {
-        System.out.println("login request");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @CrossOrigin
     @GetMapping("/history")
     public Collection<Point> getPoints(Principal user) {
-        System.out.println("history request");
         Collection<Point> points = pointService.getPoints(user);
         points.parallelStream().forEach(p -> p.setUser(null));
         return points;
@@ -65,14 +57,11 @@ public class Controller {
     @CrossOrigin
     @PostMapping("/point")
     public ResponseEntity<?> addPoint(@RequestBody Point point, Principal principal) {
-        System.out.println("point request");
-        User user = userService.findByUsername(principal.getName());
-        point.setUser(user);
-        if(!point.validate())
+        point.setUser(userService.find(principal.getName()));
+        if(!pointService.validate(point))
             return new ResponseEntity<>("Wrong syntax.", HttpStatus.BAD_REQUEST);
         point.setResult(Area.contains(point));
         System.out.println(point);
-
         return new ResponseEntity<>(pointService.save(point).setUser(null), HttpStatus.CREATED);
     }
 
